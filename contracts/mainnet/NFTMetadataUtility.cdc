@@ -3,7 +3,7 @@ import NonFungibleToken from 0x1d7e57aa55817448
 import NFTCatalog from 0x49a7cda3a1eecc29
 import NFTStorefront from 0x4eb8a10cb9f87357
 import NFTStorefrontV2 from 0x4eb8a10cb9f87357
-import FlowtyStorefront from 0x13757baecc82973b
+import FlowtyStorefront from 0x5425d4a12d3b88de
 import TopShot from 0x0b2a3299cc857e29
 
 access(all) contract NFTMetadataUtility {
