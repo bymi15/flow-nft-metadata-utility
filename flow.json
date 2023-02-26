@@ -1,0 +1,48 @@
+{
+  "contracts": {
+    "FlowtyStorefront": "./contracts/testnet/FlowtyStorefront.cdc",
+    "NFTMetadataUtility": "./contracts/testnet/NFTMetadataUtility.cdc"
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "ae1b44c0f5e8f6992ef2348898a35e50a8b0b9684000da8b1dade1b3bcd6ebee"
+    },
+    "testnet-account": {
+      "address": "13757baecc82973b",
+      "key": {
+        "type": "hex",
+        "index": 0,
+        "signatureAlgorithm": "ECDSA_P256",
+        "hashAlgorithm": "SHA3_256",
+        "privateKey": "${TESTNET_PRIVATE_KEY}"
+      }
+    },
+    "mainnet-account": {
+      "address": "5425d4a12d3b88de",
+      "key": {
+        "type": "hex",
+        "index": 0,
+        "signatureAlgorithm": "ECDSA_P256",
+        "hashAlgorithm": "SHA3_256",
+        "privateKey": "${PRIVATE_KEY}"
+      }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": ["FlowtyStorefront", "NFTMetadataUtility"]
+    },
+    "testnet": {
+      "testnet-account": ["FlowtyStorefront", "NFTMetadataUtility"]
+    },
+    "mainnet": {
+      "mainnet-account": ["FlowtyStorefront", "NFTMetadataUtility"]
+    }
+  }
+}
