@@ -7,3 +7,5 @@ NFTMetadataUtility is a smart contract deployed on Flow blockchain, providing va
 https://testnet.flowscan.org/contract/A.13757baecc82973b.NFTMetadataUtility
 
 ## Mainnet:
+
+https://flowscan.org/contract/A.5425d4a12d3b88de.NFTMetadataUtility
