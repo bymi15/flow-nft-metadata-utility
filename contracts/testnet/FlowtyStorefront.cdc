@@ -9,4 +9,12 @@ access(all) contract FlowtyStorefront {
                 .borrow()
                 ?? panic("Could not borrow public storefront from address")
     }
+
+    access(all) fun getStorefrontRefSafe(owner: Address): &NFTStorefrontV2.Storefront{NFTStorefrontV2.StorefrontPublic}? {
+        return getAccount(owner)
+                .getCapability<&NFTStorefrontV2.Storefront{NFTStorefrontV2.StorefrontPublic}>(
+                    NFTStorefrontV2.StorefrontPublicPath
+                )
+                .borrow()
+    }
 }
