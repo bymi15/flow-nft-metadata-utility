@@ -257,3 +257,4 @@ access(all) contract NFTMetadataUtility {
         return NFTMetadataUtility.getMetadataFromNFTRef(nftRef: nftRef!, owner: owner)
     }
 }
+ 

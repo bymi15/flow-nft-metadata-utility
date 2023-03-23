@@ -147,7 +147,19 @@ access(all) contract NFTMetadataUtility {
         )
     }
 
-    access(all) fun getStorefrontV2ListingMetadata(owner: Address, nftID: UInt64, listingResourceID: UInt64): StorefrontItem {
+    access(all) fun getStorefrontV2NFTRef(owner: Address, listingResourceID: UInt64): &NonFungibleToken.NFT? {
+        let storefrontRef = getAccount(owner)
+          .getCapability<&NFTStorefrontV2.Storefront{NFTStorefrontV2.StorefrontPublic}>(
+              NFTStorefrontV2.StorefrontPublicPath
+          )
+          .borrow()
+          ?? panic("Could not borrow public storefront from address")
+        let listing = storefrontRef.borrowListing(listingResourceID: listingResourceID)
+            ?? panic("No item with that ID")
+        return listing.borrowNFT()
+    }
+
+    access(all) fun getStorefrontV2ListingMetadata(owner: Address, listingResourceID: UInt64): StorefrontItem {
         let storefrontRef = getAccount(owner)
           .getCapability<&NFTStorefrontV2.Storefront{NFTStorefrontV2.StorefrontPublic}>(
               NFTStorefrontV2.StorefrontPublicPath
@@ -170,8 +182,15 @@ access(all) contract NFTMetadataUtility {
             salePrice: listingDetails.salePrice
         )
     }
+    
+    access(all) fun getStorefrontV2FlowtyNFTRef(owner: Address, listingResourceID: UInt64): &NonFungibleToken.NFT? {
+        let storefrontRef = FlowtyStorefront.getStorefrontRef(owner: owner)
+        let listing = storefrontRef.borrowListing(listingResourceID: listingResourceID)
+            ?? panic("No item with that ID")
+        return listing.borrowNFT()
+    }
 
-    access(all) fun getStorefrontV2FlowtyListingMetadata(owner: Address, nftID: UInt64, listingResourceID: UInt64): StorefrontItem {
+    access(all) fun getStorefrontV2FlowtyListingMetadata(owner: Address, listingResourceID: UInt64): StorefrontItem {
         let storefrontRef = FlowtyStorefront.getStorefrontRef(owner: owner)
         let listing = storefrontRef.borrowListing(listingResourceID: listingResourceID)
             ?? panic("No item with that ID")
@@ -190,7 +209,19 @@ access(all) contract NFTMetadataUtility {
         )
     }
 
-    access(all) fun getStorefrontV1ListingMetadata(owner: Address, nftID: UInt64, listingResourceID: UInt64): StorefrontItem {
+    access(all) fun getStorefrontV1NFTRef(owner: Address, listingResourceID: UInt64): &NonFungibleToken.NFT? {
+        let storefrontRef = getAccount(owner)
+          .getCapability<&NFTStorefront.Storefront{NFTStorefront.StorefrontPublic}>(
+              NFTStorefront.StorefrontPublicPath
+          )
+          .borrow()
+          ?? panic("Could not borrow public storefront from address")
+        let listing = storefrontRef.borrowListing(listingResourceID: listingResourceID)
+            ?? panic("No item with that ID")
+        return listing.borrowNFT()
+    }
+
+    access(all) fun getStorefrontV1ListingMetadata(owner: Address, listingResourceID: UInt64): StorefrontItem {
         let storefrontRef = getAccount(owner)
           .getCapability<&NFTStorefront.Storefront{NFTStorefront.StorefrontPublic}>(
               NFTStorefront.StorefrontPublicPath
@@ -214,13 +245,15 @@ access(all) contract NFTMetadataUtility {
         )
     }
 
-    access(all) fun getTopShotMetadata(owner: Address, nftID: UInt64): CollectionItem {
+    access(all) fun getTopShotNFTRef(owner: Address, nftID: UInt64): &NonFungibleToken.NFT? {
         let collectionRef = getAccount(owner).getCapability(/public/MomentCollection)
         .borrow<&{TopShot.MomentCollectionPublic}>()
         ?? panic("Could not get reference to public TopShot collection")
-        let nftRef = collectionRef.borrowNFT(id: nftID)
+        return collectionRef.borrowNFT(id: nftID)
+    }
 
+    access(all) fun getTopShotMetadata(owner: Address, nftID: UInt64): CollectionItem {
+        let nftRef = NFTMetadataUtility.getTopShotNFTRef(owner: owner, nftID: nftID)
         return NFTMetadataUtility.getMetadataFromNFTRef(nftRef: nftRef!, owner: owner)
     }
 }
- 
