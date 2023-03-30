@@ -19,6 +19,7 @@ access(all) contract NFTMetadataUtility {
         pub let medias: [MetadataViews.Media]
         pub let editions: [MetadataViews.Edition]
         pub let serialNumber: UInt64?
+        pub let traits: [MetadataViews.Trait]
 
         pub let publicLinkedType: Type
         pub let collectionName: String
@@ -39,6 +40,7 @@ access(all) contract NFTMetadataUtility {
             medias: [MetadataViews.Media],
             editions: [MetadataViews.Edition],
             serialNumber: UInt64?,
+            traits: [MetadataViews.Trait],
             publicLinkedType: Type,
             collectionName: String,
             collectionDescription: String,
@@ -57,6 +59,7 @@ access(all) contract NFTMetadataUtility {
             self.medias = medias
             self.editions = editions
             self.serialNumber = serialNumber
+            self.traits = traits
             self.publicLinkedType = publicLinkedType
             self.collectionName = collectionName
             self.collectionDescription = collectionDescription
@@ -106,7 +109,8 @@ access(all) contract NFTMetadataUtility {
         let mediasView = nftRef.resolveView(Type<MetadataViews.Medias>())
         let editionsView = nftRef.resolveView(Type<MetadataViews.Editions>())
         let serialView = nftRef.resolveView(Type<MetadataViews.Serial>())
-        
+        let traitsView = nftRef.resolveView(Type<MetadataViews.Traits>())
+
         if (displayView == nil || externalURLView == nil || collectionDataView == nil || collectionDisplayView == nil || royaltyView == nil) {
             panic("NFT does not have proper metadata views implemented.")
         }
@@ -125,6 +129,11 @@ access(all) contract NFTMetadataUtility {
         if serialView != nil {
             serialNumber = (serialView! as! MetadataViews.Serial).number
         }
+        
+        var traits: [MetadataViews.Trait] = []
+        if traitsView != nil {
+            traits = (traitsView! as! MetadataViews.Traits).traits
+        }
 
         return CollectionItem(
             nftID: nftRef.id,
@@ -138,6 +147,7 @@ access(all) contract NFTMetadataUtility {
             medias: medias,
             editions: editions,
             serialNumber: serialNumber,
+            traits: traits,
             publicLinkedType : collectionDataView!.publicLinkedType,
             collectionName : collectionDisplayView!.name,
             collectionDescription : collectionDisplayView!.description,
