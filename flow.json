@@ -14,7 +14,7 @@
       "key": "ae1b44c0f5e8f6992ef2348898a35e50a8b0b9684000da8b1dade1b3bcd6ebee"
     },
     "testnet-account": {
-      "address": "13757baecc82973b",
+      "address": "0eb09fe774ec067c",
       "key": {
         "type": "hex",
         "index": 0,
@@ -24,7 +24,7 @@
       }
     },
     "mainnet-account": {
-      "address": "5425d4a12d3b88de",
+      "address": "e8da92cdfa057216",
       "key": {
         "type": "hex",
         "index": 0,
