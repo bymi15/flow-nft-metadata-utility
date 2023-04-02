@@ -3,7 +3,7 @@ import NonFungibleToken from 0x1d7e57aa55817448
 import NFTCatalog from 0x49a7cda3a1eecc29
 import NFTStorefront from 0x4eb8a10cb9f87357
 import NFTStorefrontV2 from 0x4eb8a10cb9f87357
-import FlowtyStorefront from 0x5425d4a12d3b88de
+import FlowtyStorefront from 0x8640b0fd4910ef52
 import TopShot from 0x0b2a3299cc857e29
 
 access(all) contract NFTMetadataUtility {
@@ -105,7 +105,7 @@ access(all) contract NFTMetadataUtility {
         }
     }
 
-    access(self) fun getMetadataFromNFTRef(nftRef: &NonFungibleToken.NFT, owner: Address): CollectionItem {
+    access(all) fun getMetadataFromNFTRef(nftRef: &NonFungibleToken.NFT, owner: Address): CollectionItem {
         let displayView = nftRef.resolveView(Type<MetadataViews.Display>())! as! MetadataViews.Display
         let externalURLView = nftRef.resolveView(Type<MetadataViews.ExternalURL>())! as! MetadataViews.ExternalURL
         let collectionDataView = nftRef.resolveView(Type<MetadataViews.NFTCollectionData>())! as! MetadataViews.NFTCollectionData
