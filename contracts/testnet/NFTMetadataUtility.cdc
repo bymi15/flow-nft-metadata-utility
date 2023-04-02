@@ -20,6 +20,8 @@ access(all) contract NFTMetadataUtility {
         pub let editions: [MetadataViews.Edition]
         pub let serialNumber: UInt64?
         pub let traits: [MetadataViews.Trait]
+        pub let rarity: MetadataViews.Rarity?
+        pub let license: MetadataViews.License?
 
         pub let publicLinkedType: Type
         pub let collectionName: String
@@ -41,6 +43,8 @@ access(all) contract NFTMetadataUtility {
             editions: [MetadataViews.Edition],
             serialNumber: UInt64?,
             traits: [MetadataViews.Trait],
+            rarity: MetadataViews.Rarity?,
+            license: MetadataViews.License?,
             publicLinkedType: Type,
             collectionName: String,
             collectionDescription: String,
@@ -60,6 +64,8 @@ access(all) contract NFTMetadataUtility {
             self.editions = editions
             self.serialNumber = serialNumber
             self.traits = traits
+            self.rarity = rarity
+            self.license = license
             self.publicLinkedType = publicLinkedType
             self.collectionName = collectionName
             self.collectionDescription = collectionDescription
@@ -105,15 +111,18 @@ access(all) contract NFTMetadataUtility {
         let collectionDataView = nftRef.resolveView(Type<MetadataViews.NFTCollectionData>())! as! MetadataViews.NFTCollectionData
         let collectionDisplayView = nftRef.resolveView(Type<MetadataViews.NFTCollectionDisplay>())! as! MetadataViews.NFTCollectionDisplay
         let royaltyView = nftRef.resolveView(Type<MetadataViews.Royalties>())! as! MetadataViews.Royalties
-
-        let mediasView = nftRef.resolveView(Type<MetadataViews.Medias>())
-        let editionsView = nftRef.resolveView(Type<MetadataViews.Editions>())
-        let serialView = nftRef.resolveView(Type<MetadataViews.Serial>())
-        let traitsView = nftRef.resolveView(Type<MetadataViews.Traits>())
         
         if (displayView == nil || externalURLView == nil || collectionDataView == nil || collectionDisplayView == nil || royaltyView == nil) {
             panic("NFT does not have proper metadata views implemented.")
         }
+
+        // Optional metadata views
+        let mediasView = nftRef.resolveView(Type<MetadataViews.Medias>())
+        let editionsView = nftRef.resolveView(Type<MetadataViews.Editions>())
+        let serialView = nftRef.resolveView(Type<MetadataViews.Serial>())
+        let traitsView = nftRef.resolveView(Type<MetadataViews.Traits>())
+        let rarityView = nftRef.resolveView(Type<MetadataViews.Rarity>())
+        let licenseView = nftRef.resolveView(Type<MetadataViews.License>())
 
         var medias: [MetadataViews.Media] = []
         if mediasView != nil {
@@ -135,6 +144,16 @@ access(all) contract NFTMetadataUtility {
             traits = (traitsView! as! MetadataViews.Traits).traits
         }
 
+        var rarity: MetadataViews.Rarity? = nil
+        if rarityView != nil {
+            rarity = rarityView! as! MetadataViews.Rarity
+        }
+
+        var license: MetadataViews.License? = nil
+        if licenseView != nil {
+            license = licenseView! as! MetadataViews.License
+        }
+
         return CollectionItem(
             nftID: nftRef.id,
             nftUUID: nftRef.uuid,
@@ -148,6 +167,8 @@ access(all) contract NFTMetadataUtility {
             editions: editions,
             serialNumber: serialNumber,
             traits: traits,
+            rarity: rarity,
+            license: license,
             publicLinkedType : collectionDataView!.publicLinkedType,
             collectionName : collectionDisplayView!.name,
             collectionDescription : collectionDisplayView!.description,
