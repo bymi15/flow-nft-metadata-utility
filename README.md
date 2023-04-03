@@ -24,4 +24,4 @@ Fetches the NFT metadata of an NBA Topshot moment
 
 | Name                                                           | Testnet                                                                                           | Mainnet                                                                                   |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [NFTMetadataUtility](contracts/mainnet/NFTMetadataUtility.cdc) | [0x2c15a97510de84cf](https://testnet.flowscan.org/contract/A.2c15a97510de84cf.NFTMetadataUtility) | [0x8640b0fd4910ef52](https://flowscan.org/contract/A.8640b0fd4910ef52.NFTMetadataUtility) |
+| [NFTMetadataUtility](contracts/mainnet/NFTMetadataUtility.cdc) | [0xf3e71f494b4c30bf](https://testnet.flowscan.org/contract/A.f3e71f494b4c30bf.NFTMetadataUtility) | [0xac62859509383cd0](https://flowscan.org/contract/A.ac62859509383cd0.NFTMetadataUtility) |

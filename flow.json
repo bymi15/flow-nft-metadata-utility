@@ -14,23 +14,23 @@
       "key": "ae1b44c0f5e8f6992ef2348898a35e50a8b0b9684000da8b1dade1b3bcd6ebee"
     },
     "testnet-account": {
-      "address": "2c15a97510de84cf",
+      "address": "f3e71f494b4c30bf",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "$TESTNET_PRIVATE_KEY"
+        "privateKey": "${TESTNET_PRIVATE_KEY}"
       }
     },
     "mainnet-account": {
-      "address": "8640b0fd4910ef52",
+      "address": "ac62859509383cd0",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "$PRIVATE_KEY"
+        "privateKey": "${PRIVATE_KEY}"
       }
     }
   },

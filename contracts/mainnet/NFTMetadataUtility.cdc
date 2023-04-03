@@ -3,7 +3,7 @@ import NonFungibleToken from 0x1d7e57aa55817448
 import NFTCatalog from 0x49a7cda3a1eecc29
 import NFTStorefront from 0x4eb8a10cb9f87357
 import NFTStorefrontV2 from 0x4eb8a10cb9f87357
-import FlowtyStorefront from 0x8640b0fd4910ef52
+import FlowtyStorefront from 0xac62859509383cd0
 import TopShot from 0x0b2a3299cc857e29
 
 access(all) contract NFTMetadataUtility {
@@ -14,7 +14,7 @@ access(all) contract NFTMetadataUtility {
         pub let description: String
         pub let thumbnail: String
         pub let externalURL: String
-        pub let owner: Address?
+        pub let ownerAddress: Address?
         pub let royalties: [MetadataViews.Royalty]
         pub let medias: [MetadataViews.Media]
         pub let editions: [MetadataViews.Edition]
@@ -37,7 +37,7 @@ access(all) contract NFTMetadataUtility {
             description: String,
             thumbnail: String,
             externalURL: String,
-            owner: Address?,
+            ownerAddress: Address?,
             royalties: [MetadataViews.Royalty],
             medias: [MetadataViews.Media],
             editions: [MetadataViews.Edition],
@@ -58,7 +58,7 @@ access(all) contract NFTMetadataUtility {
             self.description = description
             self.thumbnail = thumbnail
             self.externalURL = externalURL
-            self.owner = owner
+            self.ownerAddress = ownerAddress
             self.royalties = royalties
             self.medias = medias
             self.editions = editions
@@ -86,6 +86,12 @@ access(all) contract NFTMetadataUtility {
         pub let salePaymentVaultType: Type
         pub let salePrice: UFix64
 
+        pub let saleCuts: [NFTStorefrontV2.SaleCut]
+        pub let saleCutsV1: [NFTStorefront.SaleCut]
+        pub let customID: String?
+        pub let commissionAmount: UFix64?
+        pub let expiry: UInt64?
+
         init(
             nft: CollectionItem,
             listingResourceID: UInt64,
@@ -94,6 +100,11 @@ access(all) contract NFTMetadataUtility {
             nftType: Type,
             salePaymentVaultType: Type,
             salePrice: UFix64,
+            saleCuts: [NFTStorefrontV2.SaleCut],
+            saleCutsV1: [NFTStorefront.SaleCut],
+            customID: String?,
+            commissionAmount: UFix64?,
+            expiry: UInt64?
         ) {
             self.nft = nft
             self.listingResourceID = listingResourceID
@@ -102,6 +113,11 @@ access(all) contract NFTMetadataUtility {
             self.nftType = nftType
             self.salePaymentVaultType = salePaymentVaultType
             self.salePrice = salePrice
+            self.saleCuts = saleCuts
+            self.saleCutsV1 = saleCutsV1
+            self.customID = customID
+            self.commissionAmount = commissionAmount
+            self.expiry = expiry
         }
     }
 
@@ -161,7 +177,7 @@ access(all) contract NFTMetadataUtility {
             description : displayView!.description,
             thumbnail : displayView!.thumbnail.uri(),
             externalURL : externalURLView!.url,
-            owner: owner,
+            ownerAddress: owner,
             royalties : royaltyView!.getRoyalties(),
             medias: medias,
             editions: editions,
@@ -210,7 +226,12 @@ access(all) contract NFTMetadataUtility {
             purchased: listingDetails.purchased,
             nftType: listingDetails.nftType,
             salePaymentVaultType: listingDetails.salePaymentVaultType,
-            salePrice: listingDetails.salePrice
+            salePrice: listingDetails.salePrice,
+            saleCuts: listingDetails.saleCuts,
+            saleCutsV1: [],
+            customID: listingDetails.customID,
+            commissionAmount: listingDetails.commissionAmount,
+            expiry: listingDetails.expiry
         )
     }
     
@@ -236,7 +257,12 @@ access(all) contract NFTMetadataUtility {
             purchased: listingDetails.purchased,
             nftType: listingDetails.nftType,
             salePaymentVaultType: listingDetails.salePaymentVaultType,
-            salePrice: listingDetails.salePrice
+            salePrice: listingDetails.salePrice,
+            saleCuts: [],
+            saleCutsV1: [],
+            customID: listingDetails.customID,
+            commissionAmount: listingDetails.commissionAmount,
+            expiry: listingDetails.expiry
         )
     }
 
@@ -272,7 +298,12 @@ access(all) contract NFTMetadataUtility {
             purchased: listingDetails.purchased,
             nftType: listingDetails.nftType,
             salePaymentVaultType: listingDetails.salePaymentVaultType,
-            salePrice: listingDetails.salePrice
+            salePrice: listingDetails.salePrice,
+            saleCuts: [],
+            saleCutsV1: listingDetails.saleCuts,
+            customID: nil,
+            commissionAmount: nil,
+            expiry: nil
         )
     }
 
@@ -288,4 +319,3 @@ access(all) contract NFTMetadataUtility {
         return NFTMetadataUtility.getMetadataFromNFTRef(nftRef: nftRef!, owner: owner)
     }
 }
- 
